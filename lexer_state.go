@@ -146,7 +146,9 @@ func headerDelimeterState(l *lexer) stateFunc {
 	l.Take("\n")
 
 	if len(l.Current()) < 2 {
-		l.Error(errHeaderMissingEmptyLine)
+		if l.Peek() != eof {
+			l.Error(errHeaderMissingEmptyLine)
+		}
 		return nil
 	}
 
